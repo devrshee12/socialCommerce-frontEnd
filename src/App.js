@@ -1,23 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
 
+
+import Sidebar from './sharedComponents/Sidebar';
+import Dashboard from './sharedComponents/Dashboard';
+import Products from './features/product/pages/Products';
+import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { apiVerifyUser } from './features/auth/actions/auth.action';
+import { apiGetAllProducts } from './features/product/actions/product.actions';
+
 function App() {
+
+  // add verify user here 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(apiGetAllProducts());
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{display:"flex"}}>
+        <Sidebar/>
+        {/* <Dashboard/> */}
+        {/* <Products/> */}
+        <Outlet/>
+      
     </div>
   );
 }
