@@ -6,9 +6,9 @@ import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import AddProduct from "../features/product/pages/AddProduct";
 import Products from "../features/product/pages/Products";
-import SpecificProduct from "../features/product/components/SpecificProduct";
 import ProductPage from "../features/product/pages/ProductPage";
 import ErrorBoundary from "../helper/ErrorBoundary";
+import EditProduct from "../features/product/pages/EditProduct";
 
 
 const appRouter = createBrowserRouter([
@@ -29,6 +29,10 @@ const appRouter = createBrowserRouter([
             {
                 path:"product/:productId",
                 element: <ProductPage/>
+            },
+            {
+                path:"edit-product/:productId",
+                element:<EditProduct/>
             }
 
         ]

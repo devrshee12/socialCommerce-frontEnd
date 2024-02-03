@@ -1,4 +1,4 @@
-import { ADDING_COMMENT, ADDING_PRODUCT, ADDING_RATING, ADD_COMMENT_ERROR, ADD_COMMENT_SUCCESS, ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, ADD_RATING_ERROR, ADD_RATING_SUCCESS, GETTING_ALL_PRODUCTS, GETTING_COMMENTS_FOR_PRODUCT, GETTING_RATINGS_FOR_PRODUCT, GET_ALL_PRODUCT_ERROR, GET_ALL_PRODUCT_SUCCESS, GET_COMMENTS_FOR_PRODUCT_ERROR, GET_COMMENTS_FOR_PRODUCT_SUCCESS, GET_RATINGS_FOR_PRODUCT_ERROR, GET_RATINGS_FOR_PRODUCT_SUCCESS} from "../types/product.types"
+import { ADDING_COMMENT, ADDING_PRODUCT, ADDING_RATING, ADD_COMMENT_ERROR, ADD_COMMENT_SUCCESS, ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, ADD_RATING_ERROR, ADD_RATING_SUCCESS, DELETE_PRODUCT_ERROR, DELETE_PRODUCT_SUCCESS, DELETING_PRODUCT, EDITING_PRODUCT, EDIT_PRODUCT_ERROR, EDIT_PRODUCT_SUCCESS, GETTING_ALL_PRODUCTS, GETTING_COMMENTS_FOR_PRODUCT, GETTING_RATINGS_FOR_PRODUCT, GET_ALL_PRODUCT_ERROR, GET_ALL_PRODUCT_SUCCESS, GET_COMMENTS_FOR_PRODUCT_ERROR, GET_COMMENTS_FOR_PRODUCT_SUCCESS, GET_RATINGS_FOR_PRODUCT_ERROR, GET_RATINGS_FOR_PRODUCT_SUCCESS} from "../types/product.types"
 
 
 
@@ -38,6 +38,20 @@ const initalState = {
 
     addingRating: false,
     addRatingError: null,
+
+
+
+    // edit product 
+
+    editingProduct: false,
+    editProductError: null,
+
+
+
+    // delete product
+
+    deletingProduct: false,
+    deleteProductError: null
 
     
     
@@ -169,7 +183,57 @@ const productReducer = (state = initalState, action) => {
                 ...state,
                 addRatingError: action.payload
             }
-            
+        
+        case EDITING_PRODUCT:
+            return {
+                ...state, 
+                editingProduct: true
+            }
+        
+        case EDIT_PRODUCT_SUCCESS:
+            const {_id} = action.payload
+            return {
+                ...state, 
+                editingProduct: false,
+                products: state.products.map((product) => {
+                    if(product._id === _id){
+                        return action.payload
+                    }
+                    else{
+                        return product;
+                    }
+                })
+
+            }
+
+        case EDIT_PRODUCT_ERROR:
+            return {
+                ...state,
+                editProductError: action.payload
+            }
+
+
+        // delete product
+        case DELETING_PRODUCT:
+            return {
+                ...state, 
+                deletingProduct: true
+            }
+        case DELETE_PRODUCT_SUCCESS:
+            const productId = action.payload
+            return {
+                ...state,
+                deletingProduct: false,
+                products: state.products.filter((product) => {
+                    return product._id !== productId
+                })
+            }
+
+        case DELETE_PRODUCT_ERROR:
+            return {
+                ...state, 
+                deleteProductError: action.payload
+            }
 
         default:
             return state

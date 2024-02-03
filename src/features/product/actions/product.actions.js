@@ -1,6 +1,6 @@
 import { toast } from "react-toastify"
-import { ADDING_COMMENT, ADDING_PRODUCT, ADDING_RATING, ADD_COMMENT_ERROR, ADD_COMMENT_SUCCESS, ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, ADD_RATING_ERROR, ADD_RATING_SUCCESS, GETTING_ALL_PRODUCTS, GETTING_COMMENTS_FOR_PRODUCT, GETTING_RATINGS_FOR_PRODUCT, GET_ALL_PRODUCT_ERROR, GET_ALL_PRODUCT_SUCCESS, GET_COMMENTS_FOR_PRODUCT_ERROR, GET_COMMENTS_FOR_PRODUCT_SUCCESS, GET_RATINGS_FOR_PRODUCT_ERROR, GET_RATINGS_FOR_PRODUCT_SUCCESS } from "../types/product.types"
-import { GET, POST } from "../../../services/services"
+import { ADDING_COMMENT, ADDING_PRODUCT, ADDING_RATING, ADD_COMMENT_ERROR, ADD_COMMENT_SUCCESS, ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, ADD_RATING_ERROR, ADD_RATING_SUCCESS, DELETE_PRODUCT_ERROR, DELETE_PRODUCT_SUCCESS, DELETING_PRODUCT, EDITING_PRODUCT, EDIT_PRODUCT_ERROR, EDIT_PRODUCT_SUCCESS, GETTING_ALL_PRODUCTS, GETTING_COMMENTS_FOR_PRODUCT, GETTING_RATINGS_FOR_PRODUCT, GET_ALL_PRODUCT_ERROR, GET_ALL_PRODUCT_SUCCESS, GET_COMMENTS_FOR_PRODUCT_ERROR, GET_COMMENTS_FOR_PRODUCT_SUCCESS, GET_RATINGS_FOR_PRODUCT_ERROR, GET_RATINGS_FOR_PRODUCT_SUCCESS } from "../types/product.types"
+import { DELETE, GET, POST, PUT } from "../../../services/services"
 
 
 
@@ -133,6 +133,55 @@ export const addRatingError = (err) => {
     }
 }
 
+// edit product
+
+export const editingProduct = () => {
+    return {
+        type: EDITING_PRODUCT
+    }
+}
+
+export const editProduct = (product) => {
+    return {
+        type: EDIT_PRODUCT_SUCCESS,
+        payload: product
+    }
+}
+
+export const editProductError = (err) => {
+    return {
+        type: EDIT_PRODUCT_ERROR,
+        payload: err.response.data.msg
+    }
+}
+
+
+// delete product
+
+
+export const deletingProduct = () => {
+    return{
+        type: DELETING_PRODUCT
+    }
+}
+
+export const deleteProduct = (productId) => {
+    return{
+        type: DELETE_PRODUCT_SUCCESS,
+        payload: productId
+    }
+}
+
+export const deleteProductError = (err) => {
+    return {
+        type: DELETE_PRODUCT_ERROR,
+        payload: err.response.data.msg
+    }
+}
+
+
+// thunk 
+
 
 
 export const apiGetAllProducts = () => {
@@ -250,5 +299,47 @@ export const apiAddRating = (ratingData) => {
             dispatch(addRatingError(err.response.data.msg))
         }
 
+    }
+}
+
+
+
+export const apiEditProduct = (productId, product, navigate) => {
+    return async(dispatch) => {
+
+        try{
+            dispatch(editingProduct());
+            const token = localStorage.getItem("token")
+            const data = await PUT(`${process.env.REACT_APP_BACKEND_API}/product/${productId}`, product, token);
+            dispatch(editProduct(data.product));
+            navigate("/");
+            toast.success("Product Edited");
+        }
+        catch(err){
+            console.log(err);
+            toast.error(err.response.data.msg)
+            dispatch(editProductError(err.response.data.msg))
+        }
+    }
+}
+
+
+// delete product
+
+export const apiDeleteProduct = (productId) => {
+    return async(dispatch) => {
+        try{
+            dispatch(deletingProduct());
+            const token = localStorage.getItem("token");
+            await DELETE(`${process.env.REACT_APP_BACKEND_API}/product/${productId}`, token, "");
+            dispatch(deleteProduct(productId))
+            toast.success("Product Deleted Successfully");
+
+        }
+        catch(err){
+            console.log(err);
+            toast.error(err.response.data.msg)
+            dispatch(deleteProductError(err.response.data.msg))
+        }
     }
 }
