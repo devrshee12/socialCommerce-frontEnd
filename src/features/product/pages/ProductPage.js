@@ -12,16 +12,18 @@ const ProductPage = () => {
     const {user} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log("here in specific product.....");
-        const tempProduct = products.filter((el) => {
-            return el._id === productId
-        })[0]
-
-        console.log("tempproduct: ", tempProduct);
-        setProduct(tempProduct)
-
-        dispatch(apiGetProductComments({productId}))        
-        dispatch(apiGetProductRatings({ productId}))        
+        if(products){
+            console.log("here in specific product.....");
+            const tempProduct = products.filter((el) => {
+                return el._id === productId
+            })[0]
+    
+            console.log("this is tempproduct: ", tempProduct);
+            setProduct(tempProduct)
+    
+            dispatch(apiGetProductComments({productId}))        
+            dispatch(apiGetProductRatings({productId}))        
+        }
     }, [products])
 
   return (

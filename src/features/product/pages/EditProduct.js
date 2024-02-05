@@ -54,7 +54,7 @@ const EditProduct = () => {
     <>
         {
             products.length > 0 ? 
-    <div style={{width:"100vw",display:"flex", justifyContent:"center", alignItems:"center"}}>
+    <div style={{width:"90vw",display:"flex", justifyContent:"center", alignItems:"center", marginTop:"100px"}}>
       <form style={{ width:"50%"}}>
        
 

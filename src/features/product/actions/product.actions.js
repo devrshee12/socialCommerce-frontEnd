@@ -1,5 +1,5 @@
 import { toast } from "react-toastify"
-import { ADDING_COMMENT, ADDING_PRODUCT, ADDING_RATING, ADD_COMMENT_ERROR, ADD_COMMENT_SUCCESS, ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, ADD_RATING_ERROR, ADD_RATING_SUCCESS, DELETE_PRODUCT_ERROR, DELETE_PRODUCT_SUCCESS, DELETING_PRODUCT, EDITING_PRODUCT, EDIT_PRODUCT_ERROR, EDIT_PRODUCT_SUCCESS, GETTING_ALL_PRODUCTS, GETTING_COMMENTS_FOR_PRODUCT, GETTING_RATINGS_FOR_PRODUCT, GET_ALL_PRODUCT_ERROR, GET_ALL_PRODUCT_SUCCESS, GET_COMMENTS_FOR_PRODUCT_ERROR, GET_COMMENTS_FOR_PRODUCT_SUCCESS, GET_RATINGS_FOR_PRODUCT_ERROR, GET_RATINGS_FOR_PRODUCT_SUCCESS } from "../types/product.types"
+import { ADDING_COMMENT, ADDING_PRODUCT, ADDING_RATING, ADD_COMMENT_ERROR, ADD_COMMENT_SUCCESS, ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, ADD_RATING_ERROR, ADD_RATING_SUCCESS, DELETE_COMMENT_ERROR, DELETE_COMMENT_SUCCESS, DELETE_PRODUCT_ERROR, DELETE_PRODUCT_SUCCESS, DELETE_RATING_ERROR, DELETE_RATING_SUCCESS, DELETING_COMMENT, DELETING_PRODUCT, DELETING_RATING, EDITING_COMMENT, EDITING_PRODUCT, EDITING_RATING, EDIT_COMMENT_ERROR, EDIT_COMMENT_SUCCESS, EDIT_PRODUCT_ERROR, EDIT_PRODUCT_SUCCESS, EDIT_RATING_ERROR, EDIT_RATING_SUCCESS, GETTING_ALL_PRODUCTS, GETTING_COMMENTS_FOR_PRODUCT, GETTING_RATINGS_FOR_PRODUCT, GET_ALL_PRODUCT_ERROR, GET_ALL_PRODUCT_SUCCESS, GET_COMMENTS_FOR_PRODUCT_ERROR, GET_COMMENTS_FOR_PRODUCT_SUCCESS, GET_RATINGS_FOR_PRODUCT_ERROR, GET_RATINGS_FOR_PRODUCT_SUCCESS } from "../types/product.types"
 import { DELETE, GET, POST, PUT } from "../../../services/services"
 
 
@@ -179,6 +179,96 @@ export const deleteProductError = (err) => {
     }
 }
 
+// edit comment 
+
+export const editingComment = () => {
+    return {
+        type: EDITING_COMMENT
+    }
+}
+
+export const editComment = (comment) => {
+    return {
+        type: EDIT_COMMENT_SUCCESS,
+        payload: comment
+    }
+}
+
+export const editCommentError = (err) => {
+    return {
+        type: EDIT_COMMENT_ERROR,
+        payload:err.response.data.msg
+    }
+}
+
+// delete comment 
+
+export const deletingComment = () => {
+    return {
+        type : DELETING_COMMENT,
+    }
+}
+
+export const deleteComment = (commentId) => {
+    return {
+        type: DELETE_COMMENT_SUCCESS,
+        payload: commentId
+    }
+}
+
+export const deleteCommentError = (err) => {
+    return{
+        type: DELETE_COMMENT_ERROR,
+        payload: err.response.data.msg
+    }
+}
+
+// edit rating 
+
+
+export const editingRating = () => {
+    return {
+        type: EDITING_RATING
+    }
+}
+
+export const editRating = (rating) => {
+    return {
+        type: EDIT_RATING_SUCCESS,
+        payload: rating
+    }
+}
+
+export const editRatingError = (err) => {
+    return {
+        type: EDIT_RATING_ERROR,
+        payload: err.response.data.msg
+    }
+}
+
+
+// delete rating 
+
+export const deletingRating = () => {
+    return {
+        type: DELETING_RATING
+    }
+}
+
+export const deleteRating = (ratingId) => {
+    return {
+        type: DELETE_RATING_SUCCESS,
+        payload: ratingId
+    }
+}
+
+export const deleteRatingError = (err) => {
+    return {
+        type : DELETE_RATING_ERROR,
+        payload: err.response.data.msg
+    }
+}
+
 
 // thunk 
 
@@ -340,6 +430,83 @@ export const apiDeleteProduct = (productId) => {
             console.log(err);
             toast.error(err.response.data.msg)
             dispatch(deleteProductError(err.response.data.msg))
+        }
+    }
+}
+
+
+// edit comment 
+
+export const apiEditComment = (commentId, comment) => {
+    return async(dispatch) => {
+        try{
+            dispatch(editingComment());
+            const token = localStorage.getItem("token");
+            const data = await PUT(`${process.env.REACT_APP_BACKEND_API}/comment/${commentId}`, comment,token);
+            dispatch(editComment(data.comment));
+            toast.success("Comment edited");
+        }
+        catch(err){
+            console.log(err);
+            toast.error(err.response.data.msg);
+            dispatch(editCommentError(err.response.data.msg))
+        }
+    }
+}
+
+// delete comment 
+
+export const apiDeleteComment = (commentId) => {
+    return async(dispatch) => {
+        try{
+            dispatch(deletingComment());
+            const token = localStorage.getItem("token");
+            await DELETE(`${process.env.REACT_APP_BACKEND_API}/comment/${commentId}`, token, "");
+            dispatch(deleteComment(commentId));
+            toast.success("Comment deleted");
+            
+        }
+        catch(err){
+            console.log(err);
+            toast.error(err.response.data.msg);
+            dispatch(deleteCommentError(err.response.data.msg));
+        }
+    }
+}
+
+// edit rating 
+
+
+export const apiEditRating = (ratingId, rating) => {
+    return async(dispatch) => {
+        try{
+            dispatch(editingComment());
+            const token = localStorage.getItem("token");
+            const data = await PUT(`${process.env.REACT_APP_BACKEND_API}/rating/${ratingId}`, rating, token);
+            dispatch(editRating(data.rating));
+            toast.success("Rating Edited");
+        }
+        catch(err){
+            console.log(err);
+            toast.error(err.response.data.msg);
+            dispatch(editRatingError(err.response.data.msg));
+        }
+    }
+}
+
+export const apiDeleteRating = (ratingId) => {
+    return async(dispatch) => {
+        try{
+            dispatch(deletingRating());
+            const token = localStorage.getItem("token");
+            await DELETE(`${process.env.REACT_APP_BACKEND_API}/rating/${ratingId}`, token, "");
+            dispatch(deleteRating(ratingId));
+            toast.success("Rating Deleted");
+        }
+        catch(err){
+            console.log(err);
+            toast.error(err.response.data.msg);
+            dispatch(err.response.data.msg)
         }
     }
 }

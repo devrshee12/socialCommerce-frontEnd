@@ -17,9 +17,9 @@ const Sidebar = () => {
     toast.success("User logged out");
   }
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial'}}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial', position:"fixed", zIndex:"100"}}>
       <CDBSidebar textColor="#fff" backgroundColor="#333">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
+        <CDBSidebarHeader >
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
             SocialCommerce
           </a>
@@ -36,8 +36,8 @@ const Sidebar = () => {
             <NavLink exact to="/profile" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/analytics" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">Analytics</CDBSidebarMenuItem>
+            <NavLink exact to="/cart" activeClassName="activeClicked">
+              <CDBSidebarMenuItem icon="chart-line">Cart</CDBSidebarMenuItem>
             </NavLink>
 
             <NavLink exact to="/login" activeClassName="activeClicked" onClick={handleLogout}>

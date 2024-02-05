@@ -32,7 +32,8 @@ const AddProduct = () => {
   }
 
   return (
-    <div style={{width:"100vw",display:"flex", justifyContent:"center", alignItems:"center"}}>
+    <div style={{width:"90vw",display:"flex", justifyContent:"center", alignItems:"center", marginTop:"100px"}}>
+      
       <form style={{ width:"50%"}}>
        
 
@@ -118,16 +119,20 @@ const AddProduct = () => {
           <input class="form-control" type="file" id="formFile"/> */}
           <div>
             <ImageUpload setFormData={setFormData} title={"Add product photos"}/>
-            {
-              formData.image.length > 0 && (
-              
-                formData.image.map((el) => {
-                  return <AsyncImage src={el} style={{height:"100px", width:"100px"}} Transition={Blur}/>
-  
-                })
-              )
+            <div style={{display:"flex"}}>
 
-            }
+              {
+                formData.image.length > 0 && (
+                
+                  formData.image.map((el) => {
+                    return <AsyncImage src={el} style={{height:"100px", width:"100px"}} Transition={Blur}/>
+    
+                  })
+                )
+
+              }
+
+            </div>
           </div>
             
             

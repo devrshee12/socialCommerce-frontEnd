@@ -9,6 +9,7 @@ import Products from "../features/product/pages/Products";
 import ProductPage from "../features/product/pages/ProductPage";
 import ErrorBoundary from "../helper/ErrorBoundary";
 import EditProduct from "../features/product/pages/EditProduct";
+import Cart from "../features/cart/pages/Cart";
 
 
 const appRouter = createBrowserRouter([
@@ -33,6 +34,10 @@ const appRouter = createBrowserRouter([
             {
                 path:"edit-product/:productId",
                 element:<EditProduct/>
+            },
+            {
+                path:"/cart",
+                element:<Cart/>
             }
 
         ]

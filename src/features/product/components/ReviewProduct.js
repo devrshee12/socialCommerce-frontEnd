@@ -36,8 +36,11 @@ function ReviewProduct() {
                         <Nav.Link href="#link" onClick={() => {setTab("ratings")}}>Ratings</Nav.Link>
                     </Nav.Item>
         </Nav>
-
+      
+        <div style={{marginRight:"280px"}}>
         <button type="button" class="btn btn-outline-primary" onClick={handleAdd}> + Add {tab.slice(0, tab.length - 1)}</button>
+
+        </div>
         </div>
         <AddComment showAddComment={showAddComment} setShowAddComment={setShowAddComment}/>
         <AddRating showAddRating={showAddRating} setShowAddRating={setShowAddRating} />

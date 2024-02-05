@@ -2,7 +2,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function DeleteModal({showDeleteModal, setShowDeleteModal, onDelete}) {
+function DeleteModal({showDeleteModal, setShowDeleteModal, onDelete, body}) {
 
   const handleClose = () => setShowDeleteModal(false);
 
@@ -20,7 +20,7 @@ function DeleteModal({showDeleteModal, setShowDeleteModal, onDelete}) {
           <Modal.Title>Delete Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to DELETE the product ? 
+          {body}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

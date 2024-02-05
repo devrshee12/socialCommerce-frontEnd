@@ -1,4 +1,4 @@
-import { ADDING_COMMENT, ADDING_PRODUCT, ADDING_RATING, ADD_COMMENT_ERROR, ADD_COMMENT_SUCCESS, ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, ADD_RATING_ERROR, ADD_RATING_SUCCESS, DELETE_PRODUCT_ERROR, DELETE_PRODUCT_SUCCESS, DELETING_PRODUCT, EDITING_PRODUCT, EDIT_PRODUCT_ERROR, EDIT_PRODUCT_SUCCESS, GETTING_ALL_PRODUCTS, GETTING_COMMENTS_FOR_PRODUCT, GETTING_RATINGS_FOR_PRODUCT, GET_ALL_PRODUCT_ERROR, GET_ALL_PRODUCT_SUCCESS, GET_COMMENTS_FOR_PRODUCT_ERROR, GET_COMMENTS_FOR_PRODUCT_SUCCESS, GET_RATINGS_FOR_PRODUCT_ERROR, GET_RATINGS_FOR_PRODUCT_SUCCESS} from "../types/product.types"
+import { ADDING_COMMENT, ADDING_PRODUCT, ADDING_RATING, ADD_COMMENT_ERROR, ADD_COMMENT_SUCCESS, ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, ADD_RATING_ERROR, ADD_RATING_SUCCESS, DELETE_COMMENT_ERROR, DELETE_COMMENT_SUCCESS, DELETE_PRODUCT_ERROR, DELETE_PRODUCT_SUCCESS, DELETE_RATING_ERROR, DELETE_RATING_SUCCESS, DELETING_COMMENT, DELETING_PRODUCT, DELETING_RATING, EDITING_COMMENT, EDITING_PRODUCT, EDITING_RATING, EDIT_COMMENT_ERROR, EDIT_COMMENT_SUCCESS, EDIT_PRODUCT_ERROR, EDIT_PRODUCT_SUCCESS, EDIT_RATING_ERROR, EDIT_RATING_SUCCESS, GETTING_ALL_PRODUCTS, GETTING_COMMENTS_FOR_PRODUCT, GETTING_RATINGS_FOR_PRODUCT, GET_ALL_PRODUCT_ERROR, GET_ALL_PRODUCT_SUCCESS, GET_COMMENTS_FOR_PRODUCT_ERROR, GET_COMMENTS_FOR_PRODUCT_SUCCESS, GET_RATINGS_FOR_PRODUCT_ERROR, GET_RATINGS_FOR_PRODUCT_SUCCESS} from "../types/product.types"
 
 
 
@@ -51,7 +51,33 @@ const initalState = {
     // delete product
 
     deletingProduct: false,
-    deleteProductError: null
+    deleteProductError: null,
+
+
+    // edit comment 
+    editingComment: false,
+    editCommentError: null,
+
+
+
+
+    // delete comment 
+    deletingComment: false,
+    deleteCommentError: null,
+
+
+
+    // edit rating 
+
+    editingRating: false,
+    editRatingError: null,
+
+
+
+
+    // delete rating 
+    deletingRating: false,
+    deleteRatingError: null
 
     
     
@@ -233,6 +259,109 @@ const productReducer = (state = initalState, action) => {
             return {
                 ...state, 
                 deleteProductError: action.payload
+            }
+
+        // edit comment 
+
+        case EDITING_COMMENT:
+            return {
+                ...state,
+                editingComment: true
+                
+            }
+
+        case EDIT_COMMENT_SUCCESS:
+            const {_id:pId} = action.payload
+            return {
+                ...state,
+                editingComment: false,
+                productComments: state.productComments.map((product) => {
+                    if(product._id === pId){
+                        return action.payload
+                    }
+                    else{
+                        return product
+                    }
+                })
+            }
+        case EDIT_COMMENT_ERROR:
+            return {
+                ...state,
+                editCommentError: action.payload
+            }
+
+
+        // delete comment
+
+        case DELETING_COMMENT:
+            return {
+                ...state, 
+                deletingComment: true
+            }
+        case DELETE_COMMENT_SUCCESS:
+            return {
+                ...state, 
+                deletingComment: false,
+                productComments: state.productComments.filter((product) => {
+                    return product._id !== action.payload
+                })
+            }
+        
+        case DELETE_COMMENT_ERROR:
+            return {
+                ...state,
+                deleteCommentError: action.payload
+            }
+
+
+        // editing rating 
+        case EDITING_RATING:
+            return {
+                ...state, 
+                editingRating: true
+            }
+        
+        case EDIT_RATING_SUCCESS:
+            const {_id:rId} = action.payload;
+            return {
+                ...state,
+                editingRating: false,
+                productRatings: state.productRatings.map((rating) => {
+                    if(rating._id === rId){
+                        return action.payload
+                    }
+                    else{
+                        return rating
+                    }
+                })
+            }
+
+        case EDIT_RATING_ERROR:
+            return {
+                ...state, 
+                editProductError: action.payload
+            }
+
+        // delete rating 
+
+        case DELETING_RATING:
+            return {
+                ...state,
+                deletingRating: true
+            }
+
+        case DELETE_RATING_SUCCESS:
+            return {
+                ...state, 
+                deletingRating: false,
+                productRatings: state.productRatings.filter((rating) => {
+                    return rating._id !== action.payload
+                })
+            }
+        case DELETE_RATING_ERROR:
+            return {
+                ...state,
+                deleteRatingError: action.payload
             }
 
         default:
