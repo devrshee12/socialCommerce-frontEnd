@@ -1,10 +1,9 @@
-import logo from './logo.svg';
+
 import './App.css';
 
 
 import Sidebar from './sharedComponents/Sidebar';
-import Dashboard from './sharedComponents/Dashboard';
-import Products from './features/product/pages/Products';
+
 import { Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,11 +24,8 @@ function App() {
   return (
     <div style={{display:"flex", overflow:"hidden"}}>
         <Sidebar/>
-        {/* <Dashboard/> */}
-        {/* <Products/> */}
         <div style={{marginLeft:"275px"}}>
         <Outlet/>
-
         </div>
       
     </div>

@@ -1,64 +1,67 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import Login from "../features/auth/pages/Login";
-import Register from "../features/auth/pages/Register";
+import { Suspense, lazy } from "react";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
-import AddProduct from "../features/product/pages/AddProduct";
-import Products from "../features/product/pages/Products";
-import ProductPage from "../features/product/pages/ProductPage";
-import ErrorBoundary from "../helper/ErrorBoundary";
-import EditProduct from "../features/product/pages/EditProduct";
-import Cart from "../features/cart/pages/Cart";
-import UserComments from "../features/comment/pages/UserComments";
-import UserRatings from "../features/rating/pages/UserRatings";
+
+
+const App = lazy(() => import("../App"))
+const Login = lazy(() => import("../features/auth/pages/Login"))
+const Register = lazy(() => import("../features/auth/pages/Register"))
+const AddProduct = lazy(() => import("../features/product/pages/AddProduct"))
+const Products = lazy(() => import("../features/product/pages/Products"))
+const ProductPage = lazy(() => import("../features/product/pages/ProductPage"))
+const ErrorBoundary = lazy(() => import("../helper/ErrorBoundary"))
+const EditProduct = lazy(() => import("../features/product/pages/EditProduct"))
+const Cart = lazy(() => import("../features/cart/pages/Cart"))
+const UserComments = lazy(() => import("../features/comment/pages/UserComments"))
+const UserRatings = lazy(() => import("../features/rating/pages/UserRatings"))
 
 
 const appRouter = createBrowserRouter([
     {
         path:"/",
-        element:<ErrorBoundary><PrivateRoute><App/></PrivateRoute></ErrorBoundary>,
+        element:<ErrorBoundary><PrivateRoute><Suspense fallback={<div>Loading...</div>}><App/></Suspense></PrivateRoute></ErrorBoundary>,
         
         children: [
             {
                 path:"add-product",
-                element:<AddProduct/>
+                element:<Suspense fallback={<div>Loading...</div>}><AddProduct/></Suspense>
             },
             {
                 path:"",
-                element:<Products/>,
+                element:<Suspense fallback={<div>Loading...</div>}><Products/></Suspense>,
                 
             },
             {
                 path:"product/:productId",
-                element: <ProductPage/>
+                element: <Suspense fallback={<div>Loading...</div>}><ProductPage/></Suspense>
             },
             {
                 path:"edit-product/:productId",
-                element:<EditProduct/>
+                element:<Suspense fallback={<div>Loading...</div>}><EditProduct/></Suspense>
             },
             {
                 path:"/cart",
-                element:<Cart/>
+                element:<Suspense fallback={<div>Loading...</div>}><Cart/></Suspense>
             },
             {
                 path:"comments",
-                element:<UserComments/>
+                element:<Suspense fallback={<div>Loading...</div>}><UserComments/></Suspense>
             },
             {
                 path:"ratings",
-                element:<UserRatings/>
+                element:<Suspense fallback={<div>Loading...</div>}><UserRatings/></Suspense>
             },
 
         ]
     },
     {
         path:"/login",
-        element:<ErrorBoundary><PublicRoute><Login/></PublicRoute></ErrorBoundary>
+        element:<ErrorBoundary><PublicRoute><Suspense fallback={<div>Loading...</div>}><Login/></Suspense></PublicRoute></ErrorBoundary>
     },
     {
         path:"/register",
-        element:<ErrorBoundary><PublicRoute><Register/></PublicRoute></ErrorBoundary>
+        element:<ErrorBoundary><PublicRoute><Suspense fallback={<div>Loading...</div>}><Register/></Suspense></PublicRoute></ErrorBoundary>
     },
     
 ])
