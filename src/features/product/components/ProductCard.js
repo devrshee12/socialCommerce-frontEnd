@@ -53,7 +53,7 @@ function ProductCard({product}) {
         <h6 className="card-text">&#8377; {product.price}</h6>
         <div style={{display:"flex", justifyContent:"space-between"}}>
           {
-            user?.role === "admin" &&
+            user?.role === "admin" && user?._id === product?.createdBy &&
             <>
               <button type="button" class="btn btn-outline-success" onClick={onEdit}>Edit</button>
               <button type="button" class="btn btn-outline-danger" onClick={() => {setShowDeleteModal(true)}}>DELETE</button>

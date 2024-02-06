@@ -26,7 +26,7 @@ const EditProduct = () => {
         const gotProduct = products.find((product) => product._id === productId);
         console.log("products are : ", products)
         console.log("got  product is : ", gotProduct);
-        ["name", "desc", "quantity", "price", "image"].forEach((el) => {
+        ["name", "desc", "quantity", "price"].forEach((el) => {
             setFormData((prevState) => ({
                 ...prevState,
                 [el]:gotProduct[el]
@@ -138,8 +138,10 @@ const EditProduct = () => {
         <div class="form-group">
           {/* <label for="formFile" class="form-label mt-4">Add Photos of Product</label>
           <input class="form-control" type="file" id="formFile"/> */}
-          {/* <div>
+          <div>
             <ImageUpload setFormData={setFormData} title={"Add product photos"}/>
+            <div style={{display:"flex"}}>
+
             {
               formData.image.length > 0 && (
               
@@ -150,7 +152,9 @@ const EditProduct = () => {
               )
 
             }
-          </div> */}
+
+            </div>
+          </div>
             
             
           

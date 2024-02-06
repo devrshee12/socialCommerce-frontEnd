@@ -8,6 +8,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiAddProductCart } from '../../cart/actions/cart.actions';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function SpecificProduct({product}) {
     useEffect(() => {
@@ -29,13 +30,16 @@ function SpecificProduct({product}) {
     const onDescrease = () => {
         if(quantity - 1 > 0){
             setQuantity(quantity - 1)
-
         }
+        
     }
 
     const onIncrease = () => {
         if(quantity + 1 <= product.quantity){
             setQuantity(quantity + 1)
+        }
+        else{
+            toast.error("Dont have more quantity")
         }
     }
   return (

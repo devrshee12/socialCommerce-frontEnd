@@ -49,3 +49,10 @@ body,html {
   width: calc(100vw - 270px);
 }
 
+
+.view:hover{
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+

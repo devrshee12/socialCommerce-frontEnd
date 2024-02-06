@@ -10,6 +10,8 @@ import ProductPage from "../features/product/pages/ProductPage";
 import ErrorBoundary from "../helper/ErrorBoundary";
 import EditProduct from "../features/product/pages/EditProduct";
 import Cart from "../features/cart/pages/Cart";
+import UserComments from "../features/comment/pages/UserComments";
+import UserRatings from "../features/rating/pages/UserRatings";
 
 
 const appRouter = createBrowserRouter([
@@ -38,7 +40,15 @@ const appRouter = createBrowserRouter([
             {
                 path:"/cart",
                 element:<Cart/>
-            }
+            },
+            {
+                path:"comments",
+                element:<UserComments/>
+            },
+            {
+                path:"ratings",
+                element:<UserRatings/>
+            },
 
         ]
     },

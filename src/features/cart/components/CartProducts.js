@@ -23,10 +23,7 @@ const CartProducts = () => {
     useEffect(()=>{
         console.log("Cartproduct updated: ",cartProducts);
     },[cartProducts]);
-    if(!cartProducts)return <>loading...</>
-    if(editingProductCart){
-        return <>Loading...</>
-    }
+    
 
   return (
     <div style={{display:"flex", flexDirection:"column"}}>
