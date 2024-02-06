@@ -1,6 +1,5 @@
 export function timeAgo(date) {
     const currentDate = new Date();
-    // Convert the input string to a Date object
     const inputDate = new Date(date);
     const timeDifference = currentDate - inputDate;
     const seconds = Math.floor(timeDifference / 1000);

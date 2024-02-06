@@ -23,6 +23,15 @@ const Register = () => {
         if(role === ""){
             toast.error("Please select Role ");
         }
+        else if(name.length < 5){
+          toast.error("Name should be atleast 5");
+        }
+        else if(number.length !== 10){
+          toast.error("Number should be 10");
+        }
+        else if(password.length < 8){
+          toast.error("Password should be atleast 8");
+        }
         else if(password !== confirmPassword){
             toast.error("Please match password and confirm password");
         }

@@ -25,7 +25,7 @@ const Login = () => {
           <div className="text-center mt-4 mb-2">
             <p className="h4 font-weight-bold"> Login </p>
           </div>
-          <CDBInput label="E-mail" type="email" value={email} onChange={(e) => {setEmail(e.target.value)}}/>
+          <CDBInput label="E-mail" type="email" value={email} onChange={(e) => {setEmail(e.target.value)}} />
           <CDBInput label="Password" type="password" value={password} onChange={(e) => {setPassword(e.target.value)}}/>
           <p className="mt-n3 text-end ">
             <CDBLink className="p-0" to="/forgot-password">

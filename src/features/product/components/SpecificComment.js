@@ -45,8 +45,8 @@ function SpecificComment({ comment }) {
           }}
         >
           <Card.Header style={{ border: "none", fontWeight: "bold" }}>
-            {comment.userId.name}
-            {comment.userId.role === "admin" ? ` (admin)` : ""}
+            {comment?.userId?.name}
+            {comment?.userId?.role === "admin" ? ` (admin)` : ""}
           </Card.Header>
         </div>
         {comment.userId._id === user._id && (
@@ -87,7 +87,7 @@ function SpecificComment({ comment }) {
       <hr style={{ marginBottom: "10px" }} />
       <Card.Body>
         <blockquote className="blockquote mb-0">
-          <p> {comment.comment} </p>
+          <p> {comment?.comment} </p>
           <footer className="blockquote-footer" style={{ fontSize: "12px" }}>
             {timeAgo(comment?.updatedAt)}
             {/* 30 mini <cite title="Source Title">Source Title</cite> */}

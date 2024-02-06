@@ -4,21 +4,24 @@ import { timeAgo } from '../../../utils/utils';
 import { apiGetUserComments } from '../actions/comment.action';
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
+import { FaArrowUp, FaArrowDown} from "react-icons/fa";
 
 const UserComments = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {user} = useSelector((state) => state.auth);
     const [page, setPage] = useState(1);
+    const [sortOrder, setSortOrder] = useState("asc");
+    const [sortBy, setSortBy] = useState("comment");
     const searchRef = useRef();
     const {gettingUserComments,userComments, getUserCommentsError, totalPages} = useSelector((state) => state.comment);
     useEffect(() => {
-        dispatch(apiGetUserComments(user._id, "", "comment", "desc", page, 5))
-    }, [page])
+        dispatch(apiGetUserComments(user._id, "", sortBy, sortOrder, page, 5))
+    }, [page, sortOrder, sortBy])
 
     const handleSearch = (e) => {
         e.preventDefault();
-        dispatch(apiGetUserComments(user._id, searchRef.current.value, "comment", "desc", page, 5))
+        dispatch(apiGetUserComments(user._id, searchRef.current.value, sortBy, sortOrder, page, 5))
     }
 
     
@@ -69,7 +72,7 @@ const UserComments = () => {
         <tr>
           <th scope="col">No.</th>
           <th scope="col">Product Name</th>
-          <th scope="col">Comment</th>
+          <th scope="col" style={{cursor:"pointer"}}>Comment {sortOrder === "asc" ? <FaArrowDown onClick={() => {setSortOrder("desc")}}/>:<FaArrowUp onClick={() => {setSortOrder("asc")}}/> }</th>
           <th scope="col">Product Price</th>
           <th scope="col">Product Quantity</th>
           <th scope="col">Comment time</th>

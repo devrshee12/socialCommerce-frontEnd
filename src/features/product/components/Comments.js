@@ -10,7 +10,7 @@ const Comments = () => {
     const {productId} = useParams();
     const {user} = useSelector((state) => state.auth)
 
-    const {productComments} = useSelector((state) => state.product)
+    const {productComments, gettingProductComments, getProductCommentsError} = useSelector((state) => state.product)
     useEffect(() => {
         console.log("data for get comment : ", productId, user?._id)
         dispatch(apiGetProductComments({productId}))
@@ -20,13 +20,18 @@ const Comments = () => {
         console.log("product Comments ", productComments)
     }, [productComments])
 
+
+    if(getProductCommentsError){
+        return <div>Error: {getProductCommentsError}</div>
+    }
+
   return (
     <div style={{display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
         {
-            productComments?.length > 0 ? 
+            !gettingProductComments ?(productComments?.length > 0 ? 
             productComments.map((comment) => {
                 return <SpecificComment comment={comment}/>
-            }) : <div>No Data</div>
+            }) : <div>No Data</div>) : <div>Loading...</div>
                 
             
         }

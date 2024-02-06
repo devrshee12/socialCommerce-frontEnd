@@ -2,8 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
-
-
 const App = lazy(() => import("../App"))
 const Login = lazy(() => import("../features/auth/pages/Login"))
 const Register = lazy(() => import("../features/auth/pages/Register"))

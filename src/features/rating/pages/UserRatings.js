@@ -4,21 +4,24 @@ import { timeAgo } from '../../../utils/utils';
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { apiGetUserRatings } from '../actions/rating.actions';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowUp, FaArrowDown} from "react-icons/fa";
 
 const UserRatings = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {user} = useSelector((state) => state.auth);
     const [page, setPage] = useState(1);
+    const [sortBy, setSortBy] = useState("star")
+    const [sortOrder, setSortOrder] = useState("asc");
     const searchRef = useRef();
     const {gettingUserRatings, userRatings, getUserRatingsError, totalPages} = useSelector((state) => state.rating);
     useEffect(() => {
-        dispatch(apiGetUserRatings(user._id, "", "star", "asc", page, 5))
-    }, [page])
+        dispatch(apiGetUserRatings(user._id, "", sortBy, sortOrder, page, 5))
+    }, [page, sortBy, sortOrder])
 
     const handleSearch = (e) => {
         e.preventDefault();
-        dispatch(apiGetUserRatings(user._id, searchRef.current.value, "star", "asc", page, 5))
+        dispatch(apiGetUserRatings(user._id, searchRef.current.value, sortBy, sortOrder, page, 5))
     }
 
     
@@ -42,8 +45,8 @@ const UserRatings = () => {
     
   return (
     <>
-        <div style={{fontWeight:"bold", marginLeft:"45px", fontSize:"30px"}}>User Ratings</div>
-        <Form className="d-flex" style={{marginLeft:"30px", marginTop:"20px"}}>
+        <div style={{fontWeight:"bold", marginLeft:"30px", fontSize:"30px"}}>User Ratings</div>
+        <Form className="d-flex" style={{marginLeft:"5px", marginTop:"20px"}}>
             <Form.Control
               type="search"
               placeholder="Search"
@@ -63,14 +66,14 @@ const UserRatings = () => {
             </Button>
         </Form>
         
-        <div style={{marginLeft:"30px", marginTop:"50px", border:"2px solid #D1D1D1"}}>
+        <div style={{marginLeft:"5px", marginTop:"50px", border:"2px solid #D1D1D1"}}>
         <table className="table table-hover">
       <thead>
         <tr>
           <th scope="col">No.</th>
           <th scope="col">Product Name</th>
-          <th scope="col">Rating</th>
-          <th scope="col">Desc</th>
+          <th scope="col" style={{cursor:"pointer"}}>Rating {sortOrder === "asc" ? <FaArrowDown onClick={() => {setSortBy("star");setSortOrder("desc")}}/>:<FaArrowUp onClick={() => {setSortBy("star");setSortOrder("asc")}}/> }</th>
+          <th scope="col" >Desc</th>
           <th scope="col">Product Price</th>
           <th scope="col">Product Quantity</th>
           <th scope="col">Rating time</th>

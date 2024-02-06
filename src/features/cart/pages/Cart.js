@@ -6,22 +6,27 @@ import CartSummary from '../components/CartSummary';
 
 const Cart = () => {
     const {user} = useSelector((state) => state.auth);
-    const {cart} = useSelector((state) => state.cart);
+    const {cart, gettingCart} = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(apiGetCartDetails(user._id))
     }, [])
   return (
-    <div style={{display:"flex"}}>
-        <CartProducts/>
-        <div style={{width:"500px", marginLeft:"40px", marginTop:"65px", display:"flex", justifyContent:"center"}}>
-          {
-            cart?.products.length > 0 &&
-          <CartSummary/>
-          }
-        </div>
-    </div>
-  )
-}
-
-export default Cart
+    <>
+    {
+      !gettingCart ? 
+      <div style={{display:"flex"}}>
+      <CartProducts/>
+      <div style={{width:"500px", marginLeft:"40px", marginTop:"65px", display:"flex", justifyContent:"center"}}>
+      {
+        cart?.products.length > 0 &&
+        <CartSummary/>
+      }
+      </div>
+      </div> : <div>Loading...</div>
+    }
+    </>
+      )
+    }
+    
+    export default Cart

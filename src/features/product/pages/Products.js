@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.product);
+  const { products, gettingAllProducts} = useSelector((state) => state.product);
   const {user} = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
@@ -46,9 +46,9 @@ const Products = () => {
         className="row row-cols-1 row-cols-md-3"
         style={{ marginLeft: "70px" }}
       >
-        {products.map((product, id) => {
+        {!gettingAllProducts?products.map((product, id) => {
           return <ProductCard product={product} key={id} />;
-        })}
+        }):<div>Loading...</div>}
       </div>
     </div>
   );

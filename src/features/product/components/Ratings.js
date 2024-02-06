@@ -9,19 +9,23 @@ const Ratings = () => {
   const {productId} = useParams();
   const {user} = useSelector((state) => state.auth);
 
-  const {productRatings} = useSelector((state) => state.product);
+  const {productRatings, gettingProductRatings, getProductRatingsError} = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(apiGetProductRatings({productId}))
   }, [])
 
+  if(getProductRatingsError){
+    return <div>Loading...</div>
+  }
+
   return (
     <div style={{display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
         {
-            productRatings?.length > 0 ? 
+            !gettingProductRatings ? (productRatings?.length > 0 ? 
             productRatings.map((rating) => {
                 return <SpecificRating rating={rating}/>
-            }) : <div>No Data</div>
+            }) : <div>No Data</div>) : <div>Loading..</div>
                 
             
         }
